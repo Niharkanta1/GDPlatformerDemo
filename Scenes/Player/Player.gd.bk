@@ -1,0 +1,114 @@
+extends KinematicBody2D
+
+class_name Player
+
+onready var animation_state = $AnimationTree.get("parameters/playback")
+
+# Player variables
+export(float) var gravity = 1000.0
+export(int) var jump_speed = -300
+export(int) var walk_speed = 75
+export(int) var dash_speed = 300
+export(int) var num_dashes = 1
+
+var velocity: Vector2
+var direction = "right"
+var is_attacking = false
+var is_dashing = false
+var state
+
+enum states {
+	IDLE, WALK, FALL, JUMP, ATTACK, DASH, DEATH
+}
+
+
+func _ready() -> void:
+	state = states.IDLE
+
+
+func update_direction(input_direction_x: float) -> void:
+	if input_direction_x > 0:
+		set_direction_right()
+	elif input_direction_x < 0:
+		set_direction_left()
+
+
+func set_direction_right() -> void:
+	direction = "right"
+	$Sprite.flip_h = false
+	$HitboxPosition.rotation_degrees = 0
+
+
+func set_direction_left() -> void:
+	direction = "left"
+	$Sprite.flip_h = true
+	$HitboxPosition.rotation_degrees = 180	
+
+
+func apply_gravity(delta) -> void:
+	velocity.y += gravity * delta
+
+
+func on_attack_finished() -> void:
+	is_attacking = false	
+
+
+func on_dash_finished() -> void:
+	is_dashing = false
+
+
+func reset_dash_counter(value: int) -> void:
+	num_dashes = value
+
+
+func has_dashes() -> bool:
+	if num_dashes > 0:
+		return true
+	return false
+
+
+func _physics_process(delta: float) -> void:
+	match state:
+		states.IDLE:
+			animation_state.travel("Idle")
+			if Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right"):
+				state = states.WALK
+		
+		states.WALK:
+			animation_state.travel("Walk")
+
+			# Action strength will either be 1 or 0, the minus sign accounts for the left -1 or right +1
+			var input_direction_x: float = (
+				Input.get_action_strength("ui_right")
+				- Input.get_action_strength("ui_left")
+			)
+
+			# Keep left or keep right if left and right are pressed together
+			if Input.is_action_pressed("ui_right") && Input.is_action_pressed("ui_left"):
+				if direction == "right":
+					input_direction_x = 1
+				else:
+					input_direction_x = -1
+
+			update_direction(input_direction_x)
+			velocity.x = walk_speed * input_direction_x 
+			apply_gravity(delta)
+			velocity = move_and_slide(velocity, Vector2.UP)
+
+			if is_equal_approx(input_direction_x, 0.0):
+				state = states.IDLE
+		
+		states.FALL:
+			pass
+		
+		states.JUMP:
+			pass
+
+		states.ATTACK:
+			pass	
+
+		states.DASH:
+			pass
+
+		states.DEATH:
+			pass
