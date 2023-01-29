@@ -3,6 +3,8 @@ extends KinematicBody2D
 class_name Player
 
 onready var animation_state = $AnimationTree.get("parameters/playback")
+onready var player_collider = $CollisionShape2D
+onready var raycast = $RayCast2D
 
 # Player variables
 export(float) var gravity = 1000.0
@@ -10,6 +12,8 @@ export(int) var jump_speed = -300
 export(int) var walk_speed = 75
 export(int) var dash_speed = 300
 export(int) var num_dashes = 1
+
+export(Vector2) var rigid_push = Vector2(225, 0)
 
 # Handle slopes
 export(float) var floor_max_anlge_in_degrees = 65.0
@@ -74,6 +78,10 @@ func has_dashes() -> bool:
 		return true
 	return false
 
+
+func play_death_sound() -> void:
+	SoundManager.death_sound.play()
+	
 
 func restart_level() -> void:
 	pass

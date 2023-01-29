@@ -3,6 +3,7 @@ extends PlayerState
 
 func enter() -> void:
 	player.animation_state.travel("Death")
+	player.player_collider.disabled = true
 
 func exit() -> void:
 	pass

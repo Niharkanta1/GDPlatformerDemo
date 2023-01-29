@@ -19,7 +19,7 @@ func _ready() -> void:
 	state = states.IDLE
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	match state:
 		states.IDLE:
 			animated_sprite.play("Idle")

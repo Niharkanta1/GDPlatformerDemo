@@ -2,19 +2,20 @@ extends PlayerState
 
 
 func enter() -> void:
-	player.animation_state.travel("Walk")
-
+	player.animation_state.travel("Push")
+	
 
 func exit() -> void:
 	pass
+	
 
-
-func physics_update(_delta: float) -> void:
+func physics_update(delta: float) -> void:
+	
 	if not player.is_on_floor():
 		if player.velocity.y > 0:
 			state_machine.transition_to("Fall")
 			return
-
+	
 	var input_direction_x: float = (
 		Input.get_action_strength("ui_right")
 		- Input.get_action_strength("ui_left")
@@ -25,11 +26,10 @@ func physics_update(_delta: float) -> void:
 			input_direction_x = 1
 		else:
 			input_direction_x = -1
-			
+
 	player.update_direction(input_direction_x)
 	player.velocity.x = player.walk_speed * input_direction_x
-	player.apply_gravity(_delta)
-	#player.velocity = player.move_and_slide(player.velocity, Vector2.UP)
+	player.apply_gravity(delta)
 	player.velocity = player.move_and_slide_with_snap(
 		player.velocity,
 		player.snap_vector,
@@ -39,26 +39,15 @@ func physics_update(_delta: float) -> void:
 		player.floor_max_angle,
 		false
 	)
+	
 	# Handle Collisions Here
 	if player.get_slide_count() > 0:
 		for i in player.get_slide_count():
 			var collision = player.get_slide_collision(i)
-			var collider = collision.collider
-
-			if collider is SpikeClub:
-				state_machine.transition_to("Death")
-				return
-
-			elif collider is Enemy:
-				state_machine.transition_to("Death")
-				return
-
-			elif collider is RigidBox:
-				if player.raycast.is_colliding():
-					if player.raycast.collide_with_bodies:
-						var collider_ray = player.raycast.get_collider()
-						if not collider_ray is RigidBox:
-							state_machine.transition_to("Push")
+			var box = collision.collider
+			if box is RigidBox:
+				box.apply_central_impulse(-collision.normal * player.rigid_push)
+	
 	
 	# Handle Other Transisions
 	if Input.is_action_just_pressed("jump"):
@@ -70,4 +59,4 @@ func physics_update(_delta: float) -> void:
 	elif Input.is_action_just_pressed("dash") and player.has_dashes():
 		state_machine.transition_to("Dash")
 			
-	
+

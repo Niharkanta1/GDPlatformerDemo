@@ -8,7 +8,7 @@ func enter() -> void:
 
 
 func exit() -> void:
-	pass
+	SoundManager.land_sound.play()
 
 
 func physics_update(_delta: float) -> void:

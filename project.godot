@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area2D",
+"class": "Door",
+"language": "GDScript",
+"path": "res://Scenes/Objects/BGElements/Door.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://Scenes/Enemy/Enemy.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "FallingSpikes",
+"language": "GDScript",
+"path": "res://Scenes/Objects/FallingSpikes/FallingSpikes.gd"
 }, {
 "base": "StaticBody2D",
 "class": "GroundButton",
@@ -65,7 +75,9 @@ _global_script_classes=[ {
 "path": "res://Scenes/Objects/Switch/Switch.gd"
 } ]
 _global_script_class_icons={
+"Door": "",
 "Enemy": "",
+"FallingSpikes": "",
 "GroundButton": "",
 "Player": "",
 "PlayerState": "",
@@ -84,6 +96,11 @@ config/name="GDPlatformerDemo"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+SoundManager="*res://Scenes/Sounds/SoundManager.tscn"
+SceneManager="*res://Scenes/SceneManager.tscn"
+
 [display]
 
 window/size/width=320
@@ -92,6 +109,10 @@ window/size/test_width=1280
 window/size/test_height=720
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[global]
+
+Script=false
 
 [gui]
 

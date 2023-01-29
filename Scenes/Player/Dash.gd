@@ -5,7 +5,8 @@ func enter() -> void:
 	player.num_dashes -= 1
 	player.is_dashing = true
 	player.animation_state.travel("Dash")
-	
+	SoundManager.dash_sound.play()
+
 
 func exit() -> void:
 	pass
@@ -22,7 +23,7 @@ func physics_update(_delta: float) -> void:
 		
 	if !player.is_dashing:
 		if player.is_on_floor():
-			state_machine.transision_to("Idle")
+			state_machine.transition_to("Idle")
 		else:
 			state_machine.transition_to("Fall")
 		return
