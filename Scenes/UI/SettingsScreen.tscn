@@ -1,8 +1,77 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/UI/SettingsScreen.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Fonts/Kenney Pixel.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 2 )
 
 [node name="SettingsScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0705882, 0.0862745, 0.129412, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -55.0
+margin_top = -41.0
+margin_right = 55.0
+margin_bottom = 41.0
+
+[node name="Music" type="Label" parent="VBoxContainer"]
+margin_right = 110.0
+margin_bottom = 12.0
+custom_fonts/font = SubResource( 1 )
+text = "Music"
+
+[node name="MusicScrollBar" type="HScrollBar" parent="VBoxContainer"]
+margin_top = 16.0
+margin_right = 110.0
+margin_bottom = 28.0
+size_flags_vertical = 3
+max_value = 20.0
+value = 10.0
+
+[node name="SoundEffects" type="Label" parent="VBoxContainer"]
+margin_top = 32.0
+margin_right = 110.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 1 )
+text = "Sound Effecs"
+
+[node name="SoundEffectScrollBar" type="HScrollBar" parent="VBoxContainer"]
+margin_top = 48.0
+margin_right = 110.0
+margin_bottom = 60.0
+size_flags_vertical = 3
+max_value = 20.0
+value = 10.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 64.0
+margin_right = 110.0
+margin_bottom = 82.0
+alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 37.0
+margin_right = 73.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 2 )
+text = "Back"
+
+[connection signal="scrolling" from="VBoxContainer/MusicScrollBar" to="." method="_on_MusicScrollBar_scrolling"]
+[connection signal="scrolling" from="VBoxContainer/SoundEffectScrollBar" to="." method="_on_SoundEffectScrollBar_scrolling"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/Button" to="." method="_on_Button_button_down"]
+[connection signal="button_up" from="VBoxContainer/HBoxContainer/Button" to="." method="_on_Button_button_up"]

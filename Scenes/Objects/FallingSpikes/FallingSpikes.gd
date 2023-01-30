@@ -25,7 +25,6 @@ func _physics_process(delta: float) -> void:
 		if raycast.collide_with_bodies:
 			var collider = raycast.get_collider()
 			if collider is Player:
-				print("Player Detected")
 				is_stuck = false
 
 	# Kinematic body 2d collisions

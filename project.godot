@@ -95,6 +95,10 @@ _global_script_class_icons={
 config/name="GDPlatformerDemo"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
+config/user="Nihar"
+config/company_name="DeadW0Lf Games"
+config/project_name="GDPlatformerDemo"
+config/version="v1.0"
 
 [autoload]
 
@@ -113,6 +117,7 @@ window/stretch/aspect="keep"
 [global]
 
 Script=false
+Player=false
 
 [gui]
 
