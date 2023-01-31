@@ -37,5 +37,5 @@ func reset_color_rect(anim) -> void:
 		"LightFade":
 			$ColorRect.color = color_light
 		
-		"RestartLevelFade":
+		"LevelFade":
 			$ColorRect.color = color_light

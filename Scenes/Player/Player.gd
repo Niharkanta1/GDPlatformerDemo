@@ -84,4 +84,8 @@ func play_death_sound() -> void:
 	
 
 func restart_level() -> void:
-	pass
+	var current_level = get_parent().get_parent().name
+	# General path res://Scenes/Levels/Level1.tscn
+	var path = "res://Scenes/Levels/"+current_level+".tscn"
+	var current_scene = load(path)
+	SceneManager.change_scene(current_scene, "LevelFade")
