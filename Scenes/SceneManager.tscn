@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/SceneManager.gd" type="Script" id=1]
 
@@ -53,21 +53,6 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 0.0705882, 0.0862745, 0.129412, 1 ) ]
-}
-
 [node name="SceneManager" type="CanvasLayer"]
 script = ExtResource( 1 )
 color_dark = Color( 0.0705882, 0.0862745, 0.129412, 1 )
@@ -77,10 +62,10 @@ color_light = Color( 1, 1, 1, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color( 0.0705882, 0.0862745, 0.129412, 1 )
+color = Color( 0.176471, 0.192157, 0.27451, 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
 anims/DarkFade = SubResource( 1 )
 anims/LevelFade = SubResource( 4 )
 anims/LightFade = SubResource( 3 )
-anims/RESET = SubResource( 2 )
